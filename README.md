@@ -74,6 +74,18 @@ There should be an fts.log file, which has stdout messages from FTS
     tail -f /usr/local/lib/python*/dist-packages/FreeTAKServer/controllers/logs/FTS.debug.log
     ```
 
+## Usage
+You can now manage FTS via systemd using commands like:
+- Stop:
+    ```
+    sudo systemctl stop fts
+    ```
+
+- Start / Restart:
+    ```
+    sudo systemctl restart fts
+    ```
+
 ## Python versions
 Most debian based systems require invoking python as python3, which is how these scripts are configured. 
 
