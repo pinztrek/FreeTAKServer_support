@@ -1,0 +1,35 @@
+# systemd serveice to start & manage FreeTAKServer
+# Author: Alan Barrow <traveler@pinztrek.com>
+# Copyright: Copyright 2020 Alan Barrow
+# License: GPL, Version 3+
+
+[Unit]
+ Description=FreeTAKServer Service
+ After=multi-user.target
+
+ [Service]
+
+# select which log approach for stdout by commenting/uncommenting these lines
+
+# Normal syslog in /var/log or similar
+StandardOutput=syslog
+
+# log to a standalone file in /tmp
+#StandardOutput=file:/tmp/fts.run
+
+# Don't capture logs at all
+#StandardOutput=file:/dev/null
+
+# Always want stderror
+StandardError=syslog
+SyslogIdentifier=fts
+
+ Type=idle
+ ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTIP '172.16.30.30' -CoTPort 8087 -RestAPIIP '172.16.30.30' -DataPackageIP '172.16.30.30' -AutoStart True 
+ Restart=always
+ RestartSec=57
+
+ [Install]
+ WantedBy=multi-user.target
+
+

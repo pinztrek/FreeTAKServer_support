@@ -4,51 +4,75 @@ FTS is normally run from the command line. These support files are intended to h
 
 
 
-## usage
+## Setup
 
 You will need to copy files to system directories, which will require use of sudo or be done as root. 
 
 From the source directory:
 
+- Edit fts.service and make any IP address or port adjustments needed for FTS. 
+Note that exact quote usage matters! (
+This really needs to be set as variables which would be easier to edit. )
+
 - copy the fts.service file to /lib/systemd/system/:
 
-sudo cp fts.service /lib/systemd/system/
+    ```
+    sudo cp fts.service /lib/systemd/system/
+    ```
 
 - Ensure it's permissions are reasonable:
 sudo chmod 644 /lib/systemd/system/fts.service
 - copy the fts.conf file to /etc/rsyslog.conf and ensure permissions are also reasonable
+    ```
+    sudo cp fts.conf /lib/systemd/system/
 
-sudo cp fts.conf /lib/systemd/system/
-sudo chmod 644 /lib/systemd/system/fts.conf
+    sudo chmod 644 /lib/systemd/system/fts.conf
+    ```
 
 - Reload rsyslog:  
-sudo systemctl restart rsyslog
+    ```
+    sudo systemctl restart rsyslog
+    ```
 
 - Make sure there are no syslog errors:
-tail /var/log/syslog
+    ```
+    tail /var/log/syslog
+    ```
 
 - Start FTS via system ctl:
 
-sudo systemctl daemon-reload 
-sudo systemctl start fts
+    ```
+    sudo systemctl daemon-reload 
+
+    sudo systemctl start fts
+    ```
 
 - Again, make sure there are no syslog errors:
 
-tail /var/log/syslog
+    ```
+    tail /var/log/syslog
+    ```
 
 This will tell you if there were issues with your systemd config. 
 
 - Then see if FTS is now logging in /var/log:
-ls -l /var/log/fts*
+    ```
+    ls -l /var/log/fts*
+    ```
 
 There should be an fts.log file, which has stdout messages from FTS
 
-tail -f /var/log/fts.log
+    ```
+    tail -f /var/log/fts.log
+    ```
 
 - Normal FTS logging can also be found in it's log directories. For PIP installs on debian it's normally in /usr/local/lib:
 
-ls -l /usr/local/lib/python*/dist-packages/FreeTAKServer/controllers/logs
-tail -f /usr/local/lib/python*/dist-packages/FreeTAKServer/controllers/logs/FTS.debug.log
+    ```
+    ls -l /usr/local/lib/python*/dist-packages/FreeTAKServer/controllers/logs
+
+    tail -f /usr/local/lib/python*/dist-packages/FreeTAKServer/controllers/logs/FTS.debug.log
+    ```
 
 ## Python versions
 Most debian based systems require invoking python as python3, which is how these scripts are configured. 
