@@ -1,4 +1,5 @@
 #!/bin/bash
+cd /tmp
 sudo python3 -m FreeTAKServer.views.CLI -DataPackageIP '172.16.30.30'  #-RestAPIIP '172.16.30.30'
 #python3 -m FreeTAKServer.controllers.RestCLIClient -DataPackageIP 172.16.30.30
 
