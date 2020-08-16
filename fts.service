@@ -25,9 +25,17 @@ StandardError=syslog
 SyslogIdentifier=fts
 
  Type=idle
- ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTIP '172.16.30.30' -CoTPort 8087 -RestAPIIP '172.16.30.30' -DataPackageIP '172.16.30.30' -AutoStart True 
+ ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTIP ${HOST_IP} -CoTPort $COTPORT -RestAPIIP ${HOST_IP} -DataPackageIP ${HOST_IP} -DataPackagePort $DATAPORT -AutoStart True 
+
  Restart=always
  RestartSec=57
+
+# Safe to assume we want to run it on this server IP
+ExecStartPre=/bin/sh -c "systemctl set-environment HOST_IP=$(hostname -I | head -1)"
+
+# Edit for your IP and ports as needed
+ Environment=COTPORT=8087
+ Environment=DATAPORT=8080
 
  [Install]
  WantedBy=multi-user.target
