@@ -11,8 +11,11 @@ You will need to copy files to system directories, which will require use of sud
 From the source directory:
 
 - Edit fts.service and make any IP address or port adjustments needed for FTS. 
-Note that exact quote usage matters! (
-This really needs to be set as variables which would be easier to edit. )
+
+The server IP address is assumed to be the current host, which should normally be the case. 
+The default CoT port is 8087, default DataPackage port is 8080. 
+
+If you do edit the params, note that exact quote usage matters! 
 
 - copy the fts.service file to /lib/systemd/system/:
 
