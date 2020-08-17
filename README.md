@@ -69,6 +69,15 @@ There should be an fts.log file, which has stdout messages from FTS
     tail -f /var/log/fts.log
     ```
 
+- You'll want to setup logrotate to rotate the log files
+    ```
+    sudo cp fts.logrotate /etc/logrotate.d
+
+    sudo chmod 644 /etc/logrotate.d/fts.logrotate
+    ```
+
+Cron runs logrotate nightly, so it will pickup the config file and start rotating the FTS console log. 
+
 - Normal FTS logging can also be found in it's log directories. For PIP installs on debian it's normally in /usr/local/lib:
 
     ```

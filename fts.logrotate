@@ -1,0 +1,13 @@
+/var/log/fts.log {
+        rotate 7
+        daily
+        compress
+        copytruncate
+        #create
+        size 100000k
+        missingok
+        postrotate
+                /usr/bin/pkill -HUP rsyslog
+        endscript
+}
+
