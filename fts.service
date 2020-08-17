@@ -31,7 +31,7 @@ SyslogIdentifier=fts
  RestartSec=57
 
 # Safe to assume we want to run it on this server IP
-ExecStartPre=/bin/sh -c "systemctl set-environment HOST_IP=$(hostname -I | head -1)"
+ExecStartPre=/bin/sh -c "systemctl set-environment HOST_IP=$(hostname -I | head -1| cut -d' ' -f1)"
 
 # Edit for your IP and ports as needed
  Environment=COTPORT=8087
