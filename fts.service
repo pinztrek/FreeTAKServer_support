@@ -6,6 +6,9 @@
 [Unit]
  Description=FreeTAKServer Service
  After=multi-user.target
+ Requires=multi-user.target
+ #Requires=network-online.target multi-user.target
+ #After=network-online.target multi-user.target
 
  [Service]
 
@@ -25,18 +28,31 @@ StandardError=syslog
 SyslogIdentifier=fts
 
  Type=idle
- ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTIP ${HOST_IP} -CoTPort $COTPORT -RestAPIIP ${REST_IP} -DataPackageIP ${HOST_IP} -DataPackagePort $DATAPORT -AutoStart True 
 
+ # Start with default IP's for all but restapi. 0.0.0.0 will bind to all ipV4 ip's
+ ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTPort $COTPORT -RestAPIIP ${REST_IP} -DataPackagePort $DATAPORT -AutoStart True 
+
+ # if for some reason you need to hard code the IP
+ #ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTIP ${COT_IP} -CoTPort $COTPORT -RestAPIIP ${REST_IP} -DataPackageIP ${DATA_IP} -DataPackagePort $DATAPORT -AutoStart True 
+
+ # if for some reason you need to use the host real IP. requires ExecStartPre line below
+ #ExecStart=/usr/bin/python3  -m FreeTAKServer.controllers.FTS -CoTIP ${HOST_IP} -CoTPort $COTPORT -RestAPIIP ${REST_IP} -DataPackageIP ${HOST_IP} -DataPackagePort $DATAPORT -AutoStart True 
+
+# run this first to get this server's IP
+# Note the order of hostname -I interfaces can vary
+#ExecStartPre=/bin/sh -c "systemctl set-environment HOST_IP=$(hostname -I | head -1| cut -d' ' -f1)"
+
+ # Other params
  Restart=always
  RestartSec=57
-
-# Safe to assume we want to run it on this server IP
-ExecStartPre=/bin/sh -c "systemctl set-environment HOST_IP=$(hostname -I | head -1| cut -d' ' -f1)"
 
 # Edit for your IP and ports as needed
  Environment=COTPORT=8087
  Environment=DATAPORT=8080
  Environment=REST_IP="127.0.0.1"
+
+ #Environment=COT_IP="0.0.0.0"
+ #Environment=DATA_IP="0.0.0.0"
 
  [Install]
  WantedBy=multi-user.target
