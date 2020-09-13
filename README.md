@@ -17,14 +17,14 @@ The default CoT port is 8087, default DataPackage port is 8080.
 
 If you do edit the params, note that exact quote usage matters! 
 
-- copy the fts.service file to /lib/systemd/system/:
+- copy the fts.service file to /lib/systemd/system/ and set to reasonable perms:
 
     ```
     sudo cp fts.service /lib/systemd/system/
-    ```
 
-- Ensure it's permissions are reasonable:
-sudo chmod 644 /lib/systemd/system/fts.service
+
+    sudo chmod 644 /lib/systemd/system/fts.service
+    ```
 - copy the fts.conf file to /etc/rsyslog.conf and ensure permissions are also reasonable
     ```
     sudo cp fts.conf /lib/systemd/system/
