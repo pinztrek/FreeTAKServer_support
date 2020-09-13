@@ -59,6 +59,7 @@ If you do edit the params, note that exact quote usage matters!
 This will tell you if there were issues with your systemd config. 
 
 - Then see if FTS is now logging in /var/log:
+
     ```
     ls -l /var/log/fts*
     ```
